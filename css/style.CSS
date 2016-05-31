@@ -1,0 +1,10 @@
+.wrapper {
+    max-width:640px;
+    margin:0 auto;
+}
+.table-fio tbody tr:hover {
+    cursor:pointer;
+}
+.modal-dialog {
+    margin-top:350px;
+}
