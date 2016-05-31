@@ -5,6 +5,3 @@
 .table-fio tbody tr:hover {
     cursor:pointer;
 }
-.modal-dialog {
-    margin-top:250px;
-}
