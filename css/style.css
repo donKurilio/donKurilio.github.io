@@ -6,5 +6,10 @@
     cursor:pointer;
 }
 .modal-dialog {
+<<<<<<< HEAD:css/style.CSS
     margin-top:100px;
 }
+=======
+    margin-top:250px;
+}
+>>>>>>> refs/remotes/origin/master:css/style.css
