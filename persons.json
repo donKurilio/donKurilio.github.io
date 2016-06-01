@@ -1,5 +1,19 @@
-{"persons":[
-    {"lastName":"Пупкин", "firstName":"Василий", "middleName" : "Игоревич"},
-    {"lastName":"Синицин", "firstName":"Алексей", "middleName" : "Сергеевич"},
-    {"lastName":"Бандель", "firstName":"Вадим", "middleName" : "Генадьевич"}
-]}
+{
+  "persons": [
+    {
+      "lastName": "Пупкин",
+      "firstName": "Василий",
+      "middleName": "Игоревич"
+    },
+    {
+      "lastName": "Синицин",
+      "firstName": "Алексей",
+      "middleName": "Сергеевич"
+    },
+    {
+      "lastName": "Бандель",
+      "firstName": "Вадим",
+      "middleName": "Генадьевич"
+    }
+  ]
+}
