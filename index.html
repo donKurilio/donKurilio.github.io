@@ -20,13 +20,15 @@
             <table class="table table-hover table-striped table-fio">
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Фамилия</th>
                     <th>Имя</th>
                     <th>Отчество</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="person in persons" ng-click="editPerson($index)">
+                <tr ng-repeat="person in persons track by person.id" ng-click="editPerson(person.id)">
+                    <td>{{person.id}}</td>
                     <td>{{person.lastName}}</td>
                     <td>{{person.firstName}}</td>
                     <td>{{person.middleName}}</td>
@@ -74,9 +76,9 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ng-click="savePerson()">Сохранить изменения
+                        <button type="button" class="btn btn-primary" ng-click="savePerson(bufPerson.id)">Сохранить изменения
                         </button>
-                        <button type="button" class="btn btn-danger" ng-click="delPerson()" ng-show="isEditing">Удалить
+                        <button type="button" class="btn btn-danger" ng-click="delPerson(bufPerson.id)" ng-show="isEditing">Удалить
                             запись
                         </button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
@@ -88,5 +90,6 @@
 </div>
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/underscore/underscore-min.js"></script>
 </body>
 </html>

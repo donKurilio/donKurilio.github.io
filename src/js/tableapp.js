@@ -1,38 +1,37 @@
 angular.module("TableApp", ["ngResource"])
     .controller("TableController", ["$scope", "$resource", function ($scope, $resource) {
-        $scope.isEditing = false;
         var modalDomEl = $('#myModal');
-        var indexE = -1; // индекс редактируемой записи
         var data = $resource("./persons.json").get(function () {
             $scope.persons = data.persons;
         });
-        $scope.editPerson = function (index) {
+        $scope.editPerson = function (id) {
             $scope.isEditing = true;
             $scope.ModalTitle = 'Редактирование записи';
-            indexE = index;
-            $scope.bufPerson = angular.copy($scope.persons[index]);
+            $scope.bufPerson = _.clone(_.find($scope.persons, function (obj) {
+                return obj.id == id
+            }));
             modalDomEl.modal('toggle');
         };
-        $scope.savePerson = function () {
+        $scope.savePerson = function (id) {
             if ($scope.MyForm.$valid) {
-                indexE != -1 ?
-                    $scope.persons[indexE] = $scope.bufPerson : // если запись редактируется
-                    $scope.persons.push($scope.bufPerson); // если запись добавляется
+                id ?
+                    $scope.persons = _.map($scope.persons, function (obj) {
+                        return obj.id == id ? $scope.bufPerson : obj;
+                    }) :
+                    $scope.persons.push(_.extend($scope.bufPerson, {"id": _.last($scope.persons).id + 1}));
                 modalDomEl.modal('toggle');
-                indexE = -1;
-                $scope.isEditing = false;
             }
         };
         $scope.addPerson = function () {
-            $scope.isEditing = false;
-            indexE = -1;
-            $scope.bufPerson = {};
             $scope.ModalTitle = 'Добавление записи';
+            $scope.isEditing = false;
+            $scope.bufPerson = {};
             modalDomEl.modal('toggle');
         };
-        $scope.delPerson = function () {
-            $scope.persons.splice(indexE, 1);
-            indexE = -1;
+        $scope.delPerson = function (id) {
+            $scope.persons = _.reject($scope.persons, function (obj) {
+                return obj.id == id;
+            });
             modalDomEl.modal('toggle');
         }
     }]);
