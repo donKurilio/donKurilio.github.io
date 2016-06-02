@@ -16,6 +16,10 @@
         <div class="page-header">
             <h1>Таблица</h1>
         </div>
+        <div class="input-group persons-filter">
+            <span class="input-group-addon" id="filterLabel">Фильтр записей:</span>
+            <input type="text" class="form-control" placeholder="Поиск..." ng-model="personsFilterQuery">
+        </div>
         <div class="table-responsive">
             <table class="table table-hover table-striped table-fio">
                 <thead>
@@ -27,7 +31,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="person in persons track by person.id" ng-click="editPerson(person.id)">
+                <tr ng-repeat="person in persons | filter: personsFilterQuery track by person.id" ng-click="editPerson(person.id)">
                     <td>{{person.id}}</td>
                     <td>{{person.lastName}}</td>
                     <td>{{person.firstName}}</td>
@@ -39,11 +43,11 @@
         <p class="text-center">
             <button class="btn btn-default" type="submit" ng-click="addPerson()">Добавить запись</button>
         </p>
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" ng-class="{'in' : showModal}" id="myModal" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        <button type="button" class="close" ng-click="showModal = false" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">{{ ModalTitle }}</h4>
                     </div>
@@ -76,20 +80,19 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ng-click="savePerson(bufPerson.id)">Сохранить изменения
+                        <button type="button" class="btn btn-primary" ng-disabled="!MyForm.$valid" ng-click="savePerson(bufPerson.id)">Сохранить изменения
                         </button>
                         <button type="button" class="btn btn-danger" ng-click="delPerson(bufPerson.id)" ng-show="isEditing">Удалить
                             запись
                         </button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                        <button type="button" class="btn btn-default" ng-click="showModal = false">Отмена</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
     </div>
+    <div class="modal-backdrop fade" ng-class="{'in' : showModal}" ng-show="showModal"></div>
 </div>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="bower_components/underscore/underscore-min.js"></script>
 </body>
 </html>

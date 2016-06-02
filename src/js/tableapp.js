@@ -1,37 +1,39 @@
 angular.module("TableApp", ["ngResource"])
     .controller("TableController", ["$scope", "$resource", function ($scope, $resource) {
-        var modalDomEl = $('#myModal');
+        $scope.showModal = false;
         var data = $resource("./persons.json").get(function () {
             $scope.persons = data.persons;
         });
         $scope.editPerson = function (id) {
             $scope.isEditing = true;
             $scope.ModalTitle = 'Редактирование записи';
-            $scope.bufPerson = _.clone(_.find($scope.persons, function (obj) {
-                return obj.id == id
+            $scope.bufPerson = angular.copy(_.find($scope.persons, function (obj) {
+                return obj.id === id
             }));
-            modalDomEl.modal('toggle');
+            $scope.showModal = true;
         };
         $scope.savePerson = function (id) {
-            if ($scope.MyForm.$valid) {
-                id ?
-                    $scope.persons = _.map($scope.persons, function (obj) {
-                        return obj.id == id ? $scope.bufPerson : obj;
-                    }) :
-                    $scope.persons.push(_.extend($scope.bufPerson, {"id": _.last($scope.persons).id + 1}));
-                modalDomEl.modal('toggle');
+            if (id) {
+                $scope.persons = _.map($scope.persons, function (obj) {
+                    return obj.id == id ? $scope.bufPerson : obj;
+                })
             }
+            else {
+                $scope.bufPerson.id = _.max(_.pluck($scope.persons, "id")) + 1;
+            }
+            $scope.persons.push($scope.bufPerson);
+            $scope.showModal = false;
         };
         $scope.addPerson = function () {
             $scope.ModalTitle = 'Добавление записи';
             $scope.isEditing = false;
             $scope.bufPerson = {};
-            modalDomEl.modal('toggle');
+            $scope.showModal = true;
         };
         $scope.delPerson = function (id) {
             $scope.persons = _.reject($scope.persons, function (obj) {
-                return obj.id == id;
+                return obj.id === id;
             });
-            modalDomEl.modal('toggle');
+            $scope.showModal = false;
         }
     }]);

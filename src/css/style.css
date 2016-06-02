@@ -5,6 +5,16 @@
 .table-fio tbody tr:hover {
     cursor:pointer;
 }
+.modal {
+    display: block;
+    z-index:-99999;
+}
+.modal.in {
+    z-index: 1050;
+}
 .modal-dialog {
     margin-top:100px;
+}
+.persons-filter {
+    margin-bottom:10px;
 }
