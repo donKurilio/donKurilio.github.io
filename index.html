@@ -25,14 +25,22 @@
             <table class="table table-hover table-striped table-fio">
                 <thead>
                 <tr>
-                    <th><a href="#" ng-click="sortBy('id')">ID<span ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='id'"></span></a></th>
-                    <th><a href="#" ng-click="sortBy('lastName')">Фамилия<span ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='lastName'"></span></a></th>
-                    <th><a href="#" ng-click="sortBy('firstName')">Имя</a><span ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='firstName'"></span></th>
-                    <th><a href="#" ng-click="sortBy('middleName')">Отчество<span ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='middleName'"></span></a></th>
+                    <th><a href="#" ng-click="sortBy('id')">ID<span ng-class="['caret', {'caret-up' : sortReverse}]"
+                                                                    ng-show="sortType==='id'"></span></a></th>
+                    <th><a href="#" ng-click="sortBy('lastName')">Фамилия<span
+                            ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='lastName'"></span></a>
+                    </th>
+                    <th><a href="#" ng-click="sortBy('firstName')">Имя</a><span
+                            ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='firstName'"></span>
+                    </th>
+                    <th><a href="#" ng-click="sortBy('middleName')">Отчество<span
+                            ng-class="['caret', {'caret-up' : sortReverse}]"
+                            ng-show="sortType==='middleName'"></span></a></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="person in persons | filter: personsFilterQuery | orderBy:sortType:sortReverse track by person.id" ng-click="editPerson(person.id)" class="personsRow">
+                <tr ng-repeat="person in persons | filter: personsFilterQuery | orderBy:sortType:sortReverse track by person.id"
+                    ng-click="editPerson(person.id)" class="personsRow">
                     <td>{{person.id}}</td>
                     <td>{{person.lastName}}</td>
                     <td>{{person.firstName}}</td>
@@ -84,9 +92,11 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ng-disabled="!MyForm.$valid" ng-click="savePerson(bufPerson.id)">Сохранить изменения
+                        <button type="button" class="btn btn-primary" ng-disabled="!MyForm.$valid"
+                                ng-click="savePerson(bufPerson.id)">Сохранить
                         </button>
-                        <button type="button" class="btn btn-danger" ng-click="delPerson(bufPerson.id)" ng-show="isEditing">Удалить
+                        <button type="button" class="btn btn-danger" ng-click="delPerson(bufPerson.id)"
+                                ng-show="isEditing">Удалить
                             запись
                         </button>
                         <button type="button" class="btn btn-default" ng-click="closeModal()">Отмена</button>
