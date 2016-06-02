@@ -6,6 +6,7 @@
     "angular-resource": "^1.5.6",
     "jquery": "^2.2.4",
     "bootstrap": "^3.3.6",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "angular-animate": "^1.5.6"
   }
 }
