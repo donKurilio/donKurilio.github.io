@@ -21,33 +21,35 @@
             <span class="input-group-addon" id="filterLabel">Фильтр записей:</span>
             <input type="text" class="form-control" placeholder="Поиск..." ng-model="personsFilterQuery">
         </div>
-        <div class="table-responsive">
-            <table class="table table-hover table-striped table-fio">
-                <thead>
-                <tr>
-                    <th><a href="#" ng-click="sortBy('id')">ID<span ng-class="['caret', {'caret-up' : sortReverse}]"
-                                                                    ng-show="sortType==='id'"></span></a></th>
-                    <th><a href="#" ng-click="sortBy('lastName')">Фамилия<span
-                            ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='lastName'"></span></a>
-                    </th>
-                    <th><a href="#" ng-click="sortBy('firstName')">Имя</a><span
-                            ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='firstName'"></span>
-                    </th>
-                    <th><a href="#" ng-click="sortBy('middleName')">Отчество<span
-                            ng-class="['caret', {'caret-up' : sortReverse}]"
-                            ng-show="sortType==='middleName'"></span></a></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="person in persons | filter: personsFilterQuery | orderBy:sortType:sortReverse track by person.id"
-                    ng-click="editPerson(person.id)" class="personsRow">
-                    <td>{{person.id}}</td>
-                    <td>{{person.lastName}}</td>
-                    <td>{{person.firstName}}</td>
-                    <td>{{person.middleName}}</td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="table-wrapper">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-fio">
+                    <thead>
+                    <tr>
+                        <th><a href="#" ng-click="sortBy('id')">ID<span ng-class="['caret', {'caret-up' : sortReverse}]"
+                                                                        ng-show="sortType==='id'"></span></a></th>
+                        <th><a href="#" ng-click="sortBy('lastName')">Фамилия<span
+                                ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='lastName'"></span></a>
+                        </th>
+                        <th><a href="#" ng-click="sortBy('firstName')">Имя</a><span
+                                ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='firstName'"></span>
+                        </th>
+                        <th><a href="#" ng-click="sortBy('middleName')">Отчество<span
+                                ng-class="['caret', {'caret-up' : sortReverse}]"
+                                ng-show="sortType==='middleName'"></span></a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="person in persons | filter: personsFilterQuery | orderBy:sortType:sortReverse track by person.id"
+                        ng-click="editPerson(person.id)" class="personsRow">
+                        <td>{{person.id}}</td>
+                        <td>{{person.lastName}}</td>
+                        <td>{{person.firstName}}</td>
+                        <td>{{person.middleName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <p class="text-center">
             <button class="btn btn-default" type="submit" ng-click="addPerson()">Добавить запись</button>
