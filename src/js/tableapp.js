@@ -37,14 +37,14 @@ angular.module("TableApp", ["ngResource", "ngAnimate"])
                 return obj.id === id;
             });
             $scope.closeModal();
-        }
+        };
         $scope.sortBy = function (attr) {
             if ($scope.sortType === attr) $scope.sortReverse = !$scope.sortReverse;
             else {
                 $scope.sortType = attr;
                 $scope.sortReverse = false;
             }
-        }
+        };
         $scope.closeModal = function () {
             $scope.showModal = false;
             $scope.MyForm.$setPristine();

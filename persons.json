@@ -6,7 +6,6 @@
       "firstName": "Василий",
       "middleName": "Игоревич"
     },
-
     {
       "id": 2,
       "lastName": "Синицин",
@@ -24,13 +23,30 @@
       "lastName": "Васильев",
       "firstName": "Вндрей",
       "middleName": "Николаевич"
-    }
-  ,
+    },
     {
       "id": 5,
       "lastName": "Федорова",
       "firstName": "Елена",
       "middleName": "Львовна"
+    },
+    {
+      "id": 6,
+      "lastName": "Шаляпин",
+      "firstName": "Андрей",
+      "middleName": "Львович"
+    },
+    {
+      "id": 7,
+      "lastName": "Петров",
+      "firstName": "Максим",
+      "middleName": "Андреевич"
+    },
+    {
+      "id": 8,
+      "lastName": "Путин",
+      "firstName": "Владимир",
+      "middleName": "Владимирович"
     }
   ]
 }

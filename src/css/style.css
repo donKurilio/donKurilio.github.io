@@ -6,7 +6,10 @@
 .table-fio tbody tr:hover {
     cursor: pointer;
 }
-
+.table-responsive {
+    max-height: 300px;
+    overflow-y: auto;
+}
 .persons-filter {
     margin-bottom: 10px;
 }
