@@ -10,6 +10,9 @@
     max-height: 50vh;
     overflow-y: auto;
 }
+.table-wrapper {
+    margin-bottom:10px;
+}
 .persons-filter {
     margin-bottom: 10px;
 }

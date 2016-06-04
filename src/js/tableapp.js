@@ -1,5 +1,5 @@
-angular.module("TableApp", ["ngResource", "ngAnimate"])
-    .controller("TableController", ["$scope", "$resource", function ($scope, $resource) {
+angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
+    .controller("TableController", ["$scope", "$resource", "$uibModal", function ($scope, $resource, $uibModal) {
         $scope.showModal = false;
         $scope.sortType = 'id';
         $scope.sortReverse = false;
@@ -13,6 +13,7 @@ angular.module("TableApp", ["ngResource", "ngAnimate"])
             $scope.isEditing = true;
             $scope.ModalTitle = 'Редактирование записи';
             $scope.showModal = true;
+            $scope.open("edit");
         };
         $scope.savePerson = function (id) {
             if (id !== undefined) {
@@ -24,19 +25,18 @@ angular.module("TableApp", ["ngResource", "ngAnimate"])
                 $scope.bufPerson.id = _.max(_.pluck($scope.persons, "id")) + 1;
                 $scope.persons.push($scope.bufPerson);
             }
-            $scope.closeModal();
         };
         $scope.addPerson = function () {
             $scope.ModalTitle = 'Добавление записи';
             $scope.isEditing = false;
             $scope.bufPerson = {};
             $scope.showModal = true;
+            $scope.open();
         };
         $scope.delPerson = function (id) {
             $scope.persons = _.reject($scope.persons, function (obj) {
                 return obj.id === id;
             });
-            $scope.closeModal();
         };
         $scope.sortBy = function (attr) {
             if ($scope.sortType === attr) $scope.sortReverse = !$scope.sortReverse;
@@ -45,8 +45,51 @@ angular.module("TableApp", ["ngResource", "ngAnimate"])
                 $scope.sortReverse = false;
             }
         };
-        $scope.closeModal = function () {
-            $scope.showModal = false;
-            $scope.MyForm.$setPristine();
-        }
+        $scope.open = function (type) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalTemplate.html',
+                controller: 'ModalCtrl',
+                resolve: {
+                    bufPerson: function () {
+                        return $scope.bufPerson;
+                    },
+                    modalTitle: function () {
+                        return "Изменить пользователя";
+                    },
+                    type: function () {
+                        return type;
+                    }
+                }
+            });
+            modalInstance.result.then(function (person) {
+                    $scope.savePerson(person.id);
+                },
+                function (id) {
+                    id !== undefined ? $scope.delPerson(id) : false;
+                });
+        };
     }]);
+angular.module("TableApp")
+    .controller('ModalCtrl', function ($scope, $uibModalInstance, bufPerson, modalTitle, type) {
+        $scope.bufPerson = bufPerson;
+        $scope.modalTitle = modalTitle;
+        type === "edit" ? $scope.isEditing = true : false;
+        $scope.save = function () {
+            $uibModalInstance.close($scope.bufPerson);
+        };
+        $scope.close = function () {
+            $uibModalInstance.dismiss();
+        };
+        $scope.del = function () {
+            $uibModalInstance.dismiss(bufPerson.id);
+        };
+
+        $scope.open = function () {
+            $scope.popup.opened = true;
+        };
+
+        $scope.popup = {
+            opened: false
+        };
+    });

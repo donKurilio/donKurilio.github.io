@@ -4,10 +4,12 @@
     <meta charset="utf-8">
     <title>Таблица</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="src/css/style.css" rel="stylesheet">
     <script src="src/js/tableapp.js"></script>
 </head>
@@ -32,11 +34,15 @@
                                 ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='lastName'"></span></a>
                         </th>
                         <th><a href="#" ng-click="sortBy('firstName')">Имя</a><span
-                                ng-class="['caret', {'caret-up' : sortReverse}]" ng-show="sortType==='firstName'"></span>
+                                ng-class="['caret', {'caret-up' : sortReverse}]"
+                                ng-show="sortType==='firstName'"></span>
                         </th>
                         <th><a href="#" ng-click="sortBy('middleName')">Отчество<span
                                 ng-class="['caret', {'caret-up' : sortReverse}]"
                                 ng-show="sortType==='middleName'"></span></a></th>
+                        <th><a href="#" ng-click="sortBy('employedDate')">Дата наема<span
+                                ng-class="['caret', {'caret-up' : sortReverse}]"
+                                ng-show="sortType==='employedDate'"></span></a></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,6 +52,7 @@
                         <td>{{person.lastName}}</td>
                         <td>{{person.firstName}}</td>
                         <td>{{person.middleName}}</td>
+                        <td>{{person.employedDate | date:'dd-MM-yyyy'}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -54,60 +61,8 @@
         <p class="text-center">
             <button class="btn btn-default" type="submit" ng-click="addPerson()">Добавить запись</button>
         </p>
-        <div class="modal in" ng-class="{'modal-open' : showModal}" ng-show="showModal" id="myModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" ng-click="closeModal()" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">{{ ModalTitle }}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form name="MyForm" class="form-horizontal">
-                            <div class="form-group">
-                                <label for="editLastName" class="col-sm-2 control-label">Фамилия</label>
-
-                                <div class="col-sm-10">
-                                    <input name="lastname" type="text" class="form-control" id="editLastName"
-                                           ng-model="bufPerson.lastName" ng-required="true" placeholder="Фамилия">
-                                    <span class="label label-danger" ng-show="MyForm.lastname.$invalid && showModal">Поле "Фамилия" не может быть пустым</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="editFirstName" ng-class="{}" class="col-sm-2 control-label">Имя</label>
-
-                                <div class="col-sm-10">
-                                    <input name="firstname" type="text" class="form-control" id="editFirstName"
-                                           ng-model="bufPerson.firstName" ng-required="true" placeholder="Имя">
-                                    <span class="label label-danger" ng-show="MyForm.firstname.$invalid && showModal">Поле "Имя" не может быть пустым</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="editMiddleName" class="col-sm-2 control-label">Отчество</label>
-
-                                <div class="col-sm-10">
-                                    <input name="middlename" type="text" class="form-control" id="editMiddleName"
-                                           ng-model="bufPerson.middleName" ng-required="true" placeholder="Отчество">
-                                    <span class="label label-danger" ng-show="MyForm.middlename.$invalid && showModal">Поле "Отчество" не может быть пустым</span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ng-disabled="!MyForm.$valid"
-                                ng-click="savePerson(bufPerson.id)">Сохранить
-                        </button>
-                        <button type="button" class="btn btn-danger" ng-click="delPerson(bufPerson.id)"
-                                ng-show="isEditing">Удалить
-                            запись
-                        </button>
-                        <button type="button" class="btn btn-default" ng-click="closeModal()">Отмена</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        {{ date}}
     </div>
-    <div class="modal-backdrop fade" ng-class="{'in' : showModal}" ng-show="showModal"></div>
 </div>
 <script src="bower_components/underscore/underscore-min.js"></script>
 </body>
