@@ -1,11 +1,14 @@
 angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
     .controller("TableController", ["$scope", "$resource", "$uibModal", function ($scope, $resource, $uibModal) {
+        var data1 = $resource("./persons.json").get(function () {
+            $scope.persons = data1.persons;
+        });
+        var data2 = $resource("./positionsOfEmployees.json").get(function () {
+            $scope.positions = data2.positions;
+        });
         $scope.showModal = false;
         $scope.sortType = 'id';
         $scope.sortReverse = false;
-        var data = $resource("./persons.json").get(function () {
-            $scope.persons = data.persons;
-        });
         $scope.editPerson = function (id) {
             $scope.bufPerson = angular.copy(_.find($scope.persons, function (obj) {
                 return obj.id === id
@@ -59,6 +62,9 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                     },
                     type: function () {
                         return type;
+                    },
+                    positions: function () {
+                        return $scope.positions;
                     }
                 }
             });
@@ -69,11 +75,11 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                     id !== undefined ? $scope.delPerson(id) : false;
                 });
         };
-    }]);
-angular.module("TableApp")
-    .controller('ModalCtrl', function ($scope, $uibModalInstance, bufPerson, modalTitle, type) {
+    }])
+    .controller('ModalCtrl', function ($scope, $uibModalInstance, bufPerson, modalTitle, type, positions) {
         $scope.bufPerson = bufPerson;
         $scope.modalTitle = modalTitle;
+        $scope.positions = positions;
         type === "edit" ? $scope.isEditing = true : false;
         $scope.save = function () {
             $uibModalInstance.close($scope.bufPerson);
@@ -91,5 +97,39 @@ angular.module("TableApp")
 
         $scope.popup = {
             opened: false
+        };
+    })
+    .directive('position', function () {
+        return {
+            require: 'ngModel',
+            link: function (scope, elm, attrs, ctrl) {
+                ctrl.$validators.position = function (modelValue, viewValue) {
+                    var ind = _.indexOf(scope.positions, viewValue);
+                    if (ind !== -1) {
+                        // it is valid
+                        return true;
+                    }
+
+                    // it is invalid
+                    return false;
+                };
+            }
+        };
+    })
+    .directive('telephone', function () {
+        var PHONE_REGEXP = /^\+?[0-9][0-9,\-]+$/;
+        return {
+            require: 'ngModel',
+            link: function (scope, elm, attrs, ctrl) {
+                ctrl.$validators.telephone = function (modelValue, viewValue) {
+                    if (PHONE_REGEXP.test(viewValue)) {
+                        // it is valid
+                        return true;
+                    }
+
+                    // it is invalid
+                    return false;
+                };
+            }
         };
     });

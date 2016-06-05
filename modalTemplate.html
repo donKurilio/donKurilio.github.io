@@ -38,7 +38,7 @@
             <label for="editEmployedDate" class="col-sm-3 control-label">Дата найма</label>
 
             <div class="col-sm-9">
-                <p class="input-group">
+                <span class="input-group">
                     <input name="employeddate" type="text" class="form-control" id="editEmployedDate"
                            ng-model="bufPerson.employedDate" ng-required="true"
                            uib-datepicker-popup="dd-MM-yyyy" is-open="popup.opened"
@@ -47,8 +47,34 @@
                         <button type="button" class="btn btn-default" ng-click="open()"><i
                                 class="glyphicon glyphicon-calendar"></i></button>
                     </span>
-                </p>
+                </span>
                 <span class="label label-danger" ng-show="MyForm.employeddate.$invalid">Поле "Дата найма" не может быть пустым</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="editPosition" class="col-sm-3 control-label">Должность</label>
+
+            <div class="col-sm-9">
+                <input name="position" type="text" class="form-control" id="editPosition"
+                       ng-model="bufPerson.position"
+                       position
+                       uib-typeahead="position for position in positions | filter:$viewValue" ng-required="true"
+                       placeholder="Должность"
+                       />
+                <span class="label label-danger" ng-show="MyForm.position.$invalid">Такой должности нет</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="editTel" class="col-sm-3 control-label">Телефон</label>
+
+            <div class="col-sm-9">
+                <input name="tel" type="text" class="form-control" id="editTel"
+                       ng-model="bufPerson.tel"
+                       telephone
+                       ng-required="true"
+                       placeholder="Телефон"
+                />
+                <span class="label label-danger" ng-show="MyForm.tel.$invalid">Неправильный телефон</span>
             </div>
         </div>
     </form>

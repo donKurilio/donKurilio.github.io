@@ -40,6 +40,12 @@
                         <th><a href="#" ng-click="sortBy('middleName')">Отчество<span
                                 ng-class="['caret', {'caret-up' : sortReverse}]"
                                 ng-show="sortType==='middleName'"></span></a></th>
+                        <th><a href="#" ng-click="sortBy('position')">Должность<span
+                                ng-class="['caret', {'caret-up' : sortReverse}]"
+                                ng-show="sortType==='position'"></span></a></th>
+                        <th><a href="#" ng-click="sortBy('tel')">Телефон<span
+                                ng-class="['caret', {'caret-up' : sortReverse}]"
+                                ng-show="sortType==='tel'"></span></a></th>
                         <th><a href="#" ng-click="sortBy('employedDate')">Дата найма<span
                                 ng-class="['caret', {'caret-up' : sortReverse}]"
                                 ng-show="sortType==='employedDate'"></span></a></th>
@@ -52,6 +58,8 @@
                         <td>{{person.lastName}}</td>
                         <td>{{person.firstName}}</td>
                         <td>{{person.middleName}}</td>
+                        <td>{{person.position}}</td>
+                        <td>{{person.tel}}</td>
                         <td>{{person.employedDate | date:'dd-MM-yyyy'}}</td>
                     </tr>
                     </tbody>
