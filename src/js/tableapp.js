@@ -54,17 +54,12 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                 templateUrl: 'modalTemplate.html',
                 controller: 'ModalCtrl',
                 resolve: {
-                    bufPerson: function () {
-                        return $scope.bufPerson;
-                    },
-                    modalTitle: function () {
-                        return "Изменить пользователя";
-                    },
-                    type: function () {
-                        return type;
-                    },
-                    positions: function () {
-                        return $scope.positions;
+                    modalScope: function () {
+                        return {
+                            bufPerson: $scope.bufPerson,
+                            type: type,
+                            positions: $scope.positions
+                        }
                     }
                 }
             });
@@ -76,11 +71,11 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                 });
         };
     }])
-    .controller('ModalCtrl', function ($scope, $uibModalInstance, bufPerson, modalTitle, type, positions) {
-        $scope.bufPerson = bufPerson;
-        $scope.modalTitle = modalTitle;
-        $scope.positions = positions;
-        type === "edit" ? $scope.isEditing = true : false;
+    .controller('ModalCtrl', function ($scope, $uibModalInstance, modalScope) {
+        $scope.bufPerson = modalScope.bufPerson;
+        $scope.positions = modalScope.positions;
+        modalScope.type === "edit" ? $scope.isEditing = true : false;
+        $scope.modalTitle = ($scope.isEditing) ? "Изменить информацию" : "Добавить сотрудника"
         $scope.save = function () {
             $uibModalInstance.close($scope.bufPerson);
         };
@@ -90,11 +85,9 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
         $scope.del = function () {
             $uibModalInstance.dismiss(bufPerson.id);
         };
-
         $scope.open = function () {
             $scope.popup.opened = true;
         };
-
         $scope.popup = {
             opened: false
         };
@@ -104,31 +97,18 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
                 ctrl.$validators.position = function (modelValue, viewValue) {
-                    var ind = _.indexOf(scope.positions, viewValue);
-                    if (ind !== -1) {
-                        // it is valid
-                        return true;
-                    }
-
-                    // it is invalid
-                    return false;
+                    return _.indexOf(scope.positions, viewValue) !== -1;
                 };
             }
         };
     })
     .directive('telephone', function () {
-        var PHONE_REGEXP = /^\+?[0-9][0-9,\-]+$/;
+        var PHONE_REGEXP = /^\+?[0-9]?[0-9,\-]+$/;
         return {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
                 ctrl.$validators.telephone = function (modelValue, viewValue) {
-                    if (PHONE_REGEXP.test(viewValue)) {
-                        // it is valid
-                        return true;
-                    }
-
-                    // it is invalid
-                    return false;
+                    return PHONE_REGEXP.test(viewValue);
                 };
             }
         };
