@@ -1,10 +1,12 @@
 angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
     .controller("TableController", ["$scope", "$resource", "$uibModal", function ($scope, $resource, $uibModal) {
-        var data1 = $resource("./persons.json").get(function () {
-            $scope.persons = data1.persons;
+        $resource("./persons.json").get(function (data) {
+            $scope.persons = data.persons;
+            $scope.keysOfPerson = _.keys($scope.persons[0]);
+            $scope.keyRusNames = ["ID", "Фамилия", "Имя", "Отчество", "Должность", "Телефон", "Дата найма"];
         });
-        var data2 = $resource("./positionsOfEmployees.json").get(function () {
-            $scope.positions = data2.positions;
+        $resource("./positionsOfEmployees.json").get(function (data) {
+            $scope.positions = data.positions;
         });
         $scope.showModal = false;
         $scope.sortType = 'id';
@@ -63,27 +65,18 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                     }
                 }
             });
-            modalInstance.result.then(function (person) {
-                    $scope.savePerson(person.id);
-                },
-                function (id) {
-                    id !== undefined ? $scope.delPerson(id) : false;
-                });
+            modalInstance.result.then(function (action) {
+                action === "delete" ? $scope.delPerson($scope.bufPerson.id) : $scope.savePerson($scope.bufPerson.id);
+            });
         };
     }])
     .controller('ModalCtrl', function ($scope, $uibModalInstance, modalScope) {
         $scope.bufPerson = modalScope.bufPerson;
         $scope.positions = modalScope.positions;
         modalScope.type === "edit" ? $scope.isEditing = true : false;
-        $scope.modalTitle = ($scope.isEditing) ? "Изменить информацию" : "Добавить сотрудника"
-        $scope.save = function () {
-            $uibModalInstance.close($scope.bufPerson);
-        };
-        $scope.close = function () {
-            $uibModalInstance.dismiss();
-        };
-        $scope.del = function () {
-            $uibModalInstance.dismiss(bufPerson.id);
+        $scope.modalTitle = ($scope.isEditing) ? "Изменить информацию" : "Добавить сотрудника";
+        $scope.action = function (action) {
+            (action !== "cancel") ? $uibModalInstance.close(action) : $uibModalInstance.dismiss();
         };
         $scope.open = function () {
             $scope.popup.opened = true;
@@ -92,11 +85,11 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
             opened: false
         };
     })
-    .directive('position', function () {
+    .directive('checkPosition', function () {
         return {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
-                ctrl.$validators.position = function (modelValue, viewValue) {
+                ctrl.$validators.checkPosition = function (modelValue, viewValue) {
                     return _.indexOf(scope.positions, viewValue) !== -1;
                 };
             }
@@ -110,6 +103,33 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                 ctrl.$validators.telephone = function (modelValue, viewValue) {
                     return PHONE_REGEXP.test(viewValue);
                 };
+            }
+        };
+    })
+    .directive('formEnterFocus', function () {
+        return {
+            require: '^form',
+            link: function (scope, elm, attrs, ctrl) {
+                var inputs = elm.find('input');
+                var button = elm.find('button')[0];
+                inputs.bind("keypress", function (e) {
+                    if (e.code === "Enter") {
+                        var el = _.indexOf(inputs, this);
+                        if (ctrl[this.name].$valid) {
+                            if (inputs[el + 1]) {
+                                var nextInput = inputs[el + 1];
+                                if (nextInput.attributes['uib-datepicker-popup']) {
+                                    angular.element(nextInput)
+                                        .parent()
+                                        .find("a")
+                                        .triggerHandler("click");
+                                }
+                                else nextInput.focus();
+                            }
+                            else button.focus();
+                        }
+                    }
+                });
             }
         };
     });

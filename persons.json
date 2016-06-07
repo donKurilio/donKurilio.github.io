@@ -5,72 +5,72 @@
       "lastName": "Пупкин",
       "firstName": "Василий",
       "middleName": "Игоревич",
-      "employedDate": 1455915600000,
       "position": "Директор",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1455915600000
     },
     {
       "id": 2,
       "lastName": "Синицин",
       "firstName": "Алексей",
       "middleName": "Сергеевич",
-      "employedDate": 1421096400000,
       "position": "Главный инженер",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1421096400000
     },
     {
       "id": 3,
       "lastName": "Бандель",
       "firstName": "Вадим",
       "middleName": "Генадьевич",
-      "employedDate": 1432328400000,
       "position": "Инженер",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1432328400000
     },
     {
       "id": 4,
       "lastName": "Васильев",
       "firstName": "Вндрей",
       "middleName": "Николаевич",
-      "employedDate": 1428872400000,
       "position": "Инженер",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1428872400000
     },
     {
       "id": 5,
       "lastName": "Федорова",
       "firstName": "Елена",
       "middleName": "Львовна",
-      "employedDate": 1455138000000,
       "position": "Секретарь",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1455138000000
     },
     {
       "id": 6,
       "lastName": "Шаляпин",
       "firstName": "Андрей",
       "middleName": "Львович",
-      "employedDate": 1460581200000,
       "position": "Уборщик",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1460581200000
     },
     {
       "id": 7,
       "lastName": "Петров",
       "firstName": "Максим",
       "middleName": "Андреевич",
-      "employedDate": 1458507600000,
       "position": "Агент по продажам",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1458507600000
     },
     {
       "id": 8,
       "lastName": "Путин",
       "firstName": "Владимир",
       "middleName": "Владимирович",
-      "employedDate": 1448150400000,
       "position": "Агент по продажам",
-      "tel": "+7-905-153-70-90"
+      "tel": "+7-905-153-70-90",
+      "employedDate": 1448150400000
     }
   ]
 }
