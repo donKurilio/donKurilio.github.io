@@ -16,12 +16,14 @@
 <body>
 <div class="container-fluid" ng-controller="TableController">
     <div class="wrapper">
-        <div class="page-header">
-            <h1>Таблица</h1>
-        </div>
-        <div class="input-group persons-filter">
-            <span class="input-group-addon" id="filterLabel">Фильтр записей:</span>
-            <input type="text" class="form-control" placeholder="Поиск..." ng-model="personsFilterQuery">
+        <div class="head-container">
+            <div class="page-header">
+                <h1>Таблица</h1>
+            </div>
+            <div class="input-group persons-filter">
+                <span class="input-group-addon" id="filterLabel">Фильтр записей:</span>
+                <input type="text" class="form-control" placeholder="Поиск..." ng-model="personsFilterQuery">
+            </div>
         </div>
         <div class="table-wrapper">
             <div class="table-responsive">
@@ -47,7 +49,6 @@
         <p class="text-center">
             <button class="btn btn-default" type="submit" ng-click="addPerson()">Добавить запись</button>
         </p>
-        {{ date}}
     </div>
 </div>
 <script src="bower_components/underscore/underscore-min.js"></script>
