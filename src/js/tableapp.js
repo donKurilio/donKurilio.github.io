@@ -69,6 +69,9 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                 action === "delete" ? $scope.delPerson($scope.bufPerson.id) : $scope.savePerson($scope.bufPerson.id);
             });
         };
+        $scope.myCallBack = function(a) {
+            alert(a);
+        }
     }])
     .controller('ModalCtrl', function ($scope, $uibModalInstance, modalScope) {
         $scope.bufPerson = modalScope.bufPerson;
@@ -132,4 +135,28 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                 });
             }
         };
+    })
+    .directive('myDirective', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                list: '=',
+                callback: '&'
+            },
+            replace: true,
+            transclude: true,
+            link: function(scope, element, attrs, controllers) {
+
+            },
+            template: '<ul class="list-group"><li ng-repeat="item in list" class="list-group-item" ng-click="callback()" ng-transclude></li></ul>'
+        };
+    })
+    .directive('myDirectiveContent', function(){
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: true,
+            transclude: true,
+            template: '<div ng-transclude></div>'
+        }
     });
