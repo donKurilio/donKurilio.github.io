@@ -136,23 +136,27 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
             }
         };
     })
-    .directive('myDirective', function ($parse) {
+    .directive('myDirective', ['$parse',function ($parse) {
         return {
-            restrict: 'E',
-            replace: true,
-            compile: function compile(tElement, tAttrs, tTransclude) {
-                var innerElements = tElement[0].children[0];
-                tElement[0].children[0].remove();
-                var ul = angular.element('<ul>');
-                var li = angular.element('<li>');
-                li.append(innerElements);
-                ul.append(li);
-                li.attr("ng-repeat",tAttrs.repeat);
-                tElement.append(ul);
+            restrict: 'AE',
+            scope: {
+                clickCallback: "&"
+            },
+            compile: function compile(tElement, tAttrs) {
+                var oldElements = tElement[0].children[0];
+                var innerElements = oldElements;
+                oldElements.remove();
+                var repeatDiv = angular.element('<div class="repeat-item">');
+                if (tAttrs.filter !== "false") {
+                    var filterInput = angular.element('<input type="text" class="form-control" placeholder="'+ (tAttrs.filterPlaceholder || "Поиск...") +'" ng-model="filterQuery">');
+                    tElement.append(filterInput);
+                }
+                repeatDiv.append(innerElements);
+                repeatDiv.attr("ng-repeat", tAttrs.repeat + " | filter: filterQuery").attr("ng-click", tAttrs.clickCallback);
+                tElement.append(repeatDiv);
                 return function (scope, element, attr) {
-                    var rhs = attr.repeat.split(' in ')[1];
-                    scope[rhs] = $parse(rhs)(scope);
+     
                 }
             }
         }
-    });
+    }]);

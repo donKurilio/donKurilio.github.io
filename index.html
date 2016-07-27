@@ -21,51 +21,14 @@
 <body>
 <div class="container-fluid" ng-controller="TableController">
     <div class="wrapper">
-        <div class="head-container">
-            <div class="page-header">
-                <h1>Таблица</h1>
-            </div>
-            <div class="input-group persons-filter">
-                <span class="input-group-addon" id="filterLabel">Фильтр записей:</span>
-                <input type="text" class="form-control" placeholder="Поиск..." ng-model="personsFilterQuery">
-            </div>
-        </div>
-        <div class="table-wrapper">
-
-            <my-directive repeat="m in persons">
-                <div class="row">
-                    <div class="col-sm-3">{{m.firstName}}</div>
-                    <div class="col-sm-3">{{m.lastName}}</div>
-                    <div class="col-sm-3">{{m.middleName}}</div>
-                    <div class="col-sm-3">{{m.tel}}</div>
-                </div>
-                <div class="row"></div>
-            </my-directive>
-
-            <div class="table-responsive" style="display: none">
-                <table class="table table-hover table-striped table-fio">
-                    <thead>
-                    <tr>
-                        <th ng-repeat="key in keysOfPerson"><a href="#"
-                                                               ng-click="sortBy(key)">{{keyRusNames[$index]}}<span
-                                ng-class="['caret', {'caret-up' : sortReverse}]"
-                                ng-show="sortType===key"></span></a></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="person in persons | filter: personsFilterQuery | orderBy:sortType:sortReverse track by person.id"
-                        ng-click="editPerson(person.id)" class="personsRow">
-                        <td ng-repeat="key in keysOfPerson">
-                            {{ $last ? (person[key] | date:'dd-MM-yyyy') : (person[key]) }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div my-directive repeat="m in persons | filter: 'Васил'" filter="true" filter-placeholder="Опана" click-callback="myCallBack(m.firstName)">
+            <div class="row">
+                <div class="col-sm-3">{{m.firstName}}</div>
+                <div class="col-sm-3">{{m.lastName}}</div>
+                <div class="col-sm-3">{{m.middleName}}</div>
+                <div class="col-sm-3">{{m.tel}}</div>
             </div>
         </div>
-        <p class="text-center">
-            <button class="btn btn-default" type="submit" ng-click="addPerson()">Добавить запись</button>
-        </p>
     </div>
 </div>
 </body>
