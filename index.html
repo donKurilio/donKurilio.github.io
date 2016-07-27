@@ -32,8 +32,14 @@
         </div>
         <div class="table-wrapper">
 
-            <my-directive list="persons" callback="myCallBack('aaaaa')">
-                <my-directive-content>{{firstName}}</my-directive-content>
+            <my-directive repeat="m in persons">
+                <div class="row">
+                    <div class="col-sm-3">{{m.firstName}}</div>
+                    <div class="col-sm-3">{{m.lastName}}</div>
+                    <div class="col-sm-3">{{m.middleName}}</div>
+                    <div class="col-sm-3">{{m.tel}}</div>
+                </div>
+                <div class="row"></div>
             </my-directive>
 
             <div class="table-responsive" style="display: none">

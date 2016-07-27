@@ -69,7 +69,7 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
                 action === "delete" ? $scope.delPerson($scope.bufPerson.id) : $scope.savePerson($scope.bufPerson.id);
             });
         };
-        $scope.myCallBack = function(a) {
+        $scope.myCallBack = function (a) {
             alert(a);
         }
     }])
@@ -136,27 +136,23 @@ angular.module("TableApp", ["ngResource", "ngAnimate", "ui.bootstrap"])
             }
         };
     })
-    .directive('myDirective', function() {
-        return {
-            restrict: 'E',
-            scope: {
-                list: '=',
-                callback: '&'
-            },
-            replace: true,
-            transclude: true,
-            link: function(scope, element, attrs, controllers) {
-
-            },
-            template: '<ul class="list-group"><li ng-repeat="item in list" class="list-group-item" ng-click="callback()" ng-transclude></li></ul>'
-        };
-    })
-    .directive('myDirectiveContent', function(){
+    .directive('myDirective', function ($parse) {
         return {
             restrict: 'E',
             replace: true,
-            scope: true,
-            transclude: true,
-            template: '<div ng-transclude></div>'
+            compile: function compile(tElement, tAttrs, tTransclude) {
+                var innerElements = tElement[0].children[0];
+                tElement[0].children[0].remove();
+                var ul = angular.element('<ul>');
+                var li = angular.element('<li>');
+                li.append(innerElements);
+                ul.append(li);
+                li.attr("ng-repeat",tAttrs.repeat);
+                tElement.append(ul);
+                return function (scope, element, attr) {
+                    var rhs = attr.repeat.split(' in ')[1];
+                    scope[rhs] = $parse(rhs)(scope);
+                }
+            }
         }
     });
